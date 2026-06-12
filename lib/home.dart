@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:developer';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -16,10 +17,12 @@ class _HomeState extends State<Home> {
 
  getRecepie( String query) async
  {
-  String url = "https://api.edamam.com/api/recipes/v2?type=public&q=$query&app_id=c9cfa49c&app_key=0e9a23d0f63d8be60cbf1319a1ab1f3e";
+  // String url = "https://api.edamam.com/api/recipes/v2?type=public&q=$query&app_id=c9cfa49c&app_key=0e9a23d0f63d8be60cbf1319a1ab1f3e";
+  String url = "https://www.themealdb.com/api/json/v1/1/search.php?s=$query";
    var response= await  http.get(Uri.parse(url));
    Map data = jsonDecode(response.body);
-   print(data);
+   log(data.toString());
+  //  print(data);
  }
 
  @override
@@ -76,10 +79,7 @@ class _HomeState extends State<Home> {
                               SnackBar(content: Text("Please Enter City Name")),
                             );
                           } else {
-                            Navigator.pushReplacementNamed(
-                              context,
-                              "/loading",
-                              arguments: {"searchText": searchcontroller.text},
+                           getRecepie(searchcontroller.text.trim()
                             );
                           }
                         },
